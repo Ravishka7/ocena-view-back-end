@@ -1,0 +1,24 @@
+{
+  "name": "ocena-view-back-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ravishka7/ocean-view-back-end.git"
+  },
+  "author": "",
+  "type": "module",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ravishka7/ocean-view-back-end/issues"
+  },
+  "homepage": "https://github.com/Ravishka7/ocean-view-back-end#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "nodemon": "^3.1.9"
+  }
+}
