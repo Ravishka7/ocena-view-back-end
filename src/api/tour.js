@@ -4,10 +4,7 @@ import { getAllTours, getTourByID, createTour, deleteTour, updateTour } from "..
 
 const toursRouter = express.Router();
 
-toursRouter.get("/", getAllTours);
-toursRouter.get("/:tourId", getTourByID);
-toursRouter.post("/", createTour);
-toursRouter.delete("/:tourId", deleteTour);
-toursRouter.put("/:tourId", updateTour);
+toursRouter.route("/").get(getAllTours).post(createTour);
+toursRouter.route("/:tourId").get(getTourByID).delete(deleteTour).put(updateTour);
 
 export default toursRouter;
