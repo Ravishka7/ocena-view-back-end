@@ -20,3 +20,17 @@ export const createRoomBooking = async (req, res) => {
   res.status(201).send();
   return;
 };
+
+export const getAllRoomBookings = async (req, res) => {
+  const roomBookings = await RoomBookings.find().populate("roomId").populate("userId");
+  res.status(200).json(roomBookings.map((roomBooking) => ({
+    id: roomBooking._id,
+    roomName: roomBooking.roomId.name,
+    userName: roomBooking.userId.name,
+    userEmail: roomBooking.userId.email,
+    checkInDate: roomBooking.checkInDate,
+    checkOutDate: roomBooking.checkOutDate,
+    roomNumber: roomBooking.roomNumber,
+  })));
+  return;
+}
