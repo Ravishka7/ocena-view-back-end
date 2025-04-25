@@ -1,5 +1,5 @@
 import express from "express";
-import { createRoomBooking, getAllRoomBookings } from "../application/roomBooking.js";
+import { createRoomBooking, getAllRoomBookings } from "../application/roomBooking";
 
 
 const roomBookingsRouter = express.Router();

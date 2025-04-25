@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllTours, getTourByID, createTour, deleteTour, updateTour } from "../application/tour.js";
+import { getAllTours, getTourByID, createTour, deleteTour, updateTour } from "../application/tour";
 
 
 const toursRouter = express.Router();

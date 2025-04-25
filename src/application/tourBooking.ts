@@ -1,6 +1,8 @@
-import TourBooking from "../infrastructure/schemas/TourBooking.js";
+import { Request, Response } from "express";
 
-export const createTourBooking = async (req, res) => {
+import TourBooking from "../infrastructure/schemas/TourBooking";
+
+export const createTourBooking = async (req: Request, res: Response) => {
   const tourBooking = req.body;
 
   //Validate request data
@@ -21,7 +23,7 @@ export const createTourBooking = async (req, res) => {
   return;
 };
 
-export const getAllTourBookings = async (req, res) => {
+export const getAllTourBookings = async (req: Request, res: Response) => {
   const tourBookings = await TourBooking.find().populate("tourId").populate("userId");
   res.status(200).json(tourBookings.map((tourBooking) => ({
     id: tourBooking._id,

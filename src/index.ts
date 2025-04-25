@@ -1,13 +1,13 @@
 import "dotenv/config"; // Load environment variables from .env file
 import express from "express";
-import connectDB from "./infrastructure/db.js";
+import connectDB from "./infrastructure/db";
 import cors from "cors";
 
-import toursRouter from "./api/tour.js";
-import roomsRouter from "./api/room.js";
-import usersRouter from "./api/user.js";
-import roomBookingsRouter from "./api/roomBooking.js";
-import tourBookingsRouter from "./api/tourBooking.js";
+import toursRouter from "./api/tour";
+import roomsRouter from "./api/room";
+import usersRouter from "./api/user";
+import roomBookingsRouter from "./api/roomBooking";
+import tourBookingsRouter from "./api/tourBooking";
 
 
 const app = express();
@@ -25,7 +25,9 @@ app.use("/api/roomBookings", roomBookingsRouter);
 app.use("/api/tourBookings", tourBookingsRouter);
 
 
-app.listen(PORT, console.log(`Server is running on http://localhost:${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
 
 
 // DNC8GMaR6RSCCSnZ

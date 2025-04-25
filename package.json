@@ -2,16 +2,15 @@
   "name": "ocena-view-back-end",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.ts",
+    "start": "ts-node src/index.ts"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Ravishka7/ocean-view-back-end.git"
   },
   "author": "",
-  "type": "module",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Ravishka7/ocean-view-back-end/issues"
@@ -24,7 +23,12 @@
     "mongoose": "^8.13.2"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^22.15.2",
     "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }
 }

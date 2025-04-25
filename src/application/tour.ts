@@ -1,4 +1,6 @@
-import Tour from "../infrastructure/schemas/Tour.js";
+import { Request, Response } from "express";
+
+import Tour from "../infrastructure/schemas/Tour";
 
 // const tours = [{
 //     _id: "1",
@@ -57,16 +59,16 @@ import Tour from "../infrastructure/schemas/Tour.js";
 //     price:"200",
 //   }
 // ]; 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const getAllTours = async(req, res) => {
+export const getAllTours = async(req: Request, res: Response) => {
   const tours = await Tour.find();
   await sleep(1000); // Simulate a delay of 1 second
   res.status(200).json(tours);
   return;
 };
 
-export const getTourByID = async (req, res) => {
+export const getTourByID = async (req: Request, res: Response) => {
   const tourId = req.params.tourId;
   const tour = await Tour.findById(tourId);
   if (tour) {
@@ -78,7 +80,7 @@ export const getTourByID = async (req, res) => {
   }
 };
 
-export const createTour = async (req, res) => {
+export const createTour = async (req: Request, res: Response) => {
   const tour = req.body;
     //Validate request data
     if (!tour.name || !tour.image || !tour.description || !tour.carouselImages) {
@@ -96,7 +98,7 @@ export const createTour = async (req, res) => {
   return;
 };
 
-export const deleteTour =async (req, res) => {
+export const deleteTour =async (req: Request, res: Response) => {
   const tourId = req.params.tourId;
   await Tour.findByIdAndDelete(tourId);
 
@@ -104,7 +106,7 @@ export const deleteTour =async (req, res) => {
   return;
 };
 
-export const updateTour = async (req, res) => {
+export const updateTour = async (req: Request, res: Response) => {
   const tourId = req.params.tourId;
   const updatedTour = req.body;
 

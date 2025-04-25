@@ -1,15 +1,17 @@
-import Room from "../infrastructure/schemas/Room.js";
+import { Request, Response } from "express";
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+import Room from "../infrastructure/schemas/Room";
 
-export const getAllRooms = async(req, res) => {
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export const getAllRooms = async(req: Request, res: Response) => {
   const rooms = await Room.find();
   await sleep(1000); // Simulate a delay of 1 second
   res.status(200).json(rooms);
   return;
 };
 
-export const getRoomByID = async (req, res) => {
+export const getRoomByID = async (req: Request, res: Response) => {
   const roomId = req.params.roomId;
   const room = await Room.findById(roomId);
   if (room) {
@@ -21,7 +23,7 @@ export const getRoomByID = async (req, res) => {
   }
 };
 
-export const createRoom = async (req, res) => {
+export const createRoom = async (req: Request, res: Response) => {
   const room = req.body;
     //Validate request data
     if (!room.name || !room.image || !room.description || !room.price || !room.carouselImages) {
@@ -40,7 +42,7 @@ export const createRoom = async (req, res) => {
   return;
 };
 
-export const deleteRoom =async (req, res) => {
+export const deleteRoom =async (req: Request, res: Response) => {
   const roomId = req.params.roomId;
   await Room.findByIdAndDelete(roomId);
 
@@ -48,7 +50,7 @@ export const deleteRoom =async (req, res) => {
   return;
 };
 
-export const updateRoom = async (req, res) => {
+export const updateRoom = async (req: Request, res: Response) => {
   const roomId = req.params.roomId;
   const updatedRoom = req.body;
 

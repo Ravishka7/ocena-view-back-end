@@ -1,5 +1,5 @@
 import express from "express";
-import { createTourBooking, getAllTourBookings } from "../application/tourBooking.js";
+import { createTourBooking, getAllTourBookings } from "../application/tourBooking";
 
 
 const tourBookingsRouter = express.Router();

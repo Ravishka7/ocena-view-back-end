@@ -1,6 +1,8 @@
-import RoomBookings from "../infrastructure/schemas/RoomBookings.js";
+import { Request, Response } from "express";
 
-export const createRoomBooking = async (req, res) => {
+import RoomBookings from "../infrastructure/schemas/RoomBookings";
+
+export const createRoomBooking = async (req: Request, res: Response) => {
   const roomBooking = req.body;
 
   //Validate request data
@@ -21,7 +23,7 @@ export const createRoomBooking = async (req, res) => {
   return;
 };
 
-export const getAllRoomBookings = async (req, res) => {
+export const getAllRoomBookings = async (req: Request, res: Response) => {
   const roomBookings = await RoomBookings.find().populate("roomId").populate("userId");
   res.status(200).json(roomBookings.map((roomBooking) => ({
     id: roomBooking._id,

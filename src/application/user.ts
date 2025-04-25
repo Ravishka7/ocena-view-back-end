@@ -1,6 +1,8 @@
-import User from '../infrastructure/schemas/User.js';
+import { Request, Response } from 'express';
 
-export const createUser = async (req, res) => {
+import User from '../infrastructure/schemas/User';
+
+export const createUser = async (req: Request, res: Response) => {
     const user = req.body;
 
     //Validate the request data
