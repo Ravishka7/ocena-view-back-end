@@ -1,7 +1,10 @@
 import Room from "../infrastructure/schemas/Room.js";
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export const getAllRooms = async(req, res) => {
   const rooms = await Room.find();
+  await sleep(1000); // Simulate a delay of 1 second
   res.status(200).json(rooms);
   return;
 };

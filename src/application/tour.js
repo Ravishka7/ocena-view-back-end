@@ -57,9 +57,11 @@ import Tour from "../infrastructure/schemas/Tour.js";
 //     price:"200",
 //   }
 // ]; 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const getAllTours = async(req, res) => {
   const tours = await Tour.find();
+  await sleep(1000); // Simulate a delay of 1 second
   res.status(200).json(tours);
   return;
 };
