@@ -1,6 +1,8 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 
 import Tour from "../infrastructure/schemas/Tour";
+import NotFoundError from "../domain/errors/not-found-error";
+import ValidationError from "../domain/errors/validation-error";
 
 // const tours = [{
 //     _id: "1",
@@ -61,30 +63,39 @@ import Tour from "../infrastructure/schemas/Tour";
 // ]; 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const getAllTours = async(req: Request, res: Response) => {
-  const tours = await Tour.find();
-  await sleep(1000); // Simulate a delay of 1 second
-  res.status(200).json(tours);
-  return;
+export const getAllTours = async(req: Request, res: Response, next: NextFunction) => {
+  try {
+    const tours = await Tour.find();
+    await sleep(1000); // Simulate a delay of 1 second
+    res.status(200).json(tours);
+    return;
+  } catch (error) {
+    next(error); // Pass the error to the global error handling middleware
+  } 
 };
 
-export const getTourByID = async (req: Request, res: Response) => {
-  const tourId = req.params.tourId;
-  const tour = await Tour.findById(tourId);
-  if (tour) {
-    res.status(200).json(tour);
-    return;
-  } else {
-    res.status(404).json();
-    return;
-  }
+export const getTourByID = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const tourId = req.params.tourId;
+    const tour = await Tour.findById(tourId);
+    if (tour) {
+      res.status(200).json(tour);
+      return;
+    } else {
+      throw new NotFoundError("Tour not found");
+    }
+  } catch (error) {
+    next(error); // Pass the error to the global error handling middleware
+  } 
 };
 
-export const createTour = async (req: Request, res: Response) => {
-  const tour = req.body;
+export const createTour = async (req: Request, res: Response, next: NextFunction) => {
+
+  try {
+    const tour = req.body;
     //Validate request data
     if (!tour.name || !tour.image || !tour.description || !tour.carouselImages) {
-    return res.status(400).json();
+    throw new ValidationError("Invalid tour data");
     }
   //Create new tour
   await Tour.create({
@@ -96,32 +107,43 @@ export const createTour = async (req: Request, res: Response) => {
 
   res.status(201).send();
   return;
+  } catch (error) {
+    next(error); // Pass the error to the global error handling middleware
+  } 
 };
 
-export const deleteTour =async (req: Request, res: Response) => {
-  const tourId = req.params.tourId;
-  await Tour.findByIdAndDelete(tourId);
+export const deleteTour =async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const tourId = req.params.tourId;
+    await Tour.findByIdAndDelete(tourId);
 
-  res.status(200).send();
-  return;
+    res.status(200).send();
+    return;
+  } catch (error) {
+    next(error); // Pass the error to the global error handling middleware
+  } 
 };
 
-export const updateTour = async (req: Request, res: Response) => {
-  const tourId = req.params.tourId;
-  const updatedTour = req.body;
+export const updateTour = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const tourId = req.params.tourId;
+    const updatedTour = req.body;
 
-  //Validate request data
-  if (
-    !updatedTour.name ||
-    !updatedTour.image ||
-    !updatedTour.description ||
-    !updatedTour.carouselImages
-  ) {
-    return res.status(400).json();
-  }
+    //Validate request data
+    if (
+      !updatedTour.name ||
+      !updatedTour.image ||
+      !updatedTour.description ||
+      !updatedTour.carouselImages
+    ) {
+      throw new ValidationError("Invalid tour data");
+    }
 
-  await Tour.findByIdAndUpdate(tourId, updatedTour);
+    await Tour.findByIdAndUpdate(tourId, updatedTour);
 
-  res.status(200).send();
-  return;
+    res.status(200).send();
+    return;
+  } catch (error) {
+    next(error); // Pass the error to the global error handling middleware
+  } 
 }

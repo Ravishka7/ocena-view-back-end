@@ -8,6 +8,7 @@ import roomsRouter from "./api/room";
 import usersRouter from "./api/user";
 import roomBookingsRouter from "./api/roomBooking";
 import tourBookingsRouter from "./api/tourBooking";
+import globalErrorHandlingMiddleware from "./api/middleware/global-error-handling-middleware";
 
 
 const app = express();
@@ -23,6 +24,9 @@ app.use("/api/rooms", roomsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/roomBookings", roomBookingsRouter);
 app.use("/api/tourBookings", tourBookingsRouter);
+
+
+app.use(globalErrorHandlingMiddleware);
 
 
 app.listen(PORT, () => {
