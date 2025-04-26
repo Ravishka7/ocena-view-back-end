@@ -1,13 +1,16 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+import NotFoundError from "../domain/errors/not-found-error";
+import ValidationError from "../domain/errors/validation-error";
 
 import TourBooking from "../infrastructure/schemas/TourBooking";
 
-export const createTourBooking = async (req: Request, res: Response) => {
-  const tourBooking = req.body;
+export const createTourBooking = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const tourBooking = req.body;
 
   //Validate request data
   if (!tourBooking.tourId || !tourBooking.userId || !tourBooking.bookingDate || !tourBooking.numberOfAdults || !tourBooking.numberOfChildren) {
-    return res.status(400).json();
+    throw new ValidationError("Invalid tour booking data");
   }
 
   //Create new tour booking
@@ -21,10 +24,15 @@ export const createTourBooking = async (req: Request, res: Response) => {
 
   res.status(201).send();
   return;
+  } catch (error) {
+    next(error);
+  }
+  
 };
 
-export const getAllTourBookings = async (req: Request, res: Response) => {
-  const tourBookings = await TourBooking.find().populate("tourId").populate("userId");
+export const getAllTourBookings = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const tourBookings = await TourBooking.find().populate("tourId").populate("userId");
   res.status(200).json(tourBookings.map((tourBooking) => ({
     id: tourBooking._id,
     tourName: tourBooking.tourId.name,
@@ -35,4 +43,8 @@ export const getAllTourBookings = async (req: Request, res: Response) => {
     numberOfChildren: tourBooking.numberOfChildren,
   })));
   return;
+  } catch (error) {
+    next(error); 
+  }
+  
 }
