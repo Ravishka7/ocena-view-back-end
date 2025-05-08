@@ -38,7 +38,7 @@ export const createRoom = async (req: Request, res: Response, next: NextFunction
   try {
     const room = req.body;
     //Validate request data
-    if (!room.name || !room.image || !room.description || !room.price || !room.carouselImages) {
+    if (!room.name || !room.image || !room.description || !room.price || !room.subImage_1 || !room.subImage_2 || !room.subImage_3) {
     throw new ValidationError("Invalid room data");
     }
   //Create new room
@@ -47,7 +47,9 @@ export const createRoom = async (req: Request, res: Response, next: NextFunction
     image: room.image,
     description: room.description,
     price: room.price,
-    carouselImages: room.carouselImages,
+    subImage_1: room.subImage_1,
+    subImage_2: room.subImage_2,
+    subImage_3: room.subImage_3,
   });
 
   res.status(201).send();
@@ -76,17 +78,20 @@ export const updateRoom = async (req: Request, res: Response, next: NextFunction
     const roomId = req.params.roomId;
     const updatedRoom = req.body;
 
-    //Validate request data
+    // Validate request data
     if (
       !updatedRoom.name ||
       !updatedRoom.image ||
       !updatedRoom.description ||
       !updatedRoom.price ||
-      !updatedRoom.carouselImages
+      !updatedRoom.subImage_1 ||
+      !updatedRoom.subImage_2 ||
+      !updatedRoom.subImage_3
     ) {
       throw new ValidationError("Invalid room data");
     }
 
+    // Proceed with updating the room
     await Room.findByIdAndUpdate(roomId, updatedRoom);
 
     res.status(200).send();
@@ -94,5 +99,4 @@ export const updateRoom = async (req: Request, res: Response, next: NextFunction
   } catch (error) {
     next(error);
   }
-  
-}
+};

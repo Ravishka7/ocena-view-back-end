@@ -94,7 +94,7 @@ export const createTour = async (req: Request, res: Response, next: NextFunction
   try {
     const tour = req.body;
     //Validate request data
-    if (!tour.name || !tour.image || !tour.description || !tour.carouselImages) {
+    if (!tour.name || !tour.image || !tour.description || !tour.subImage_1 || !tour.subImage_2 || !tour.subImage_3) {
     throw new ValidationError("Invalid tour data");
     }
   //Create new tour
@@ -102,7 +102,9 @@ export const createTour = async (req: Request, res: Response, next: NextFunction
     name: tour.name,
     image: tour.image,
     description: tour.description,
-    carouselImages: tour.carouselImages,
+    subImage_1: tour.subImage_1,
+    subImage_2: tour.subImage_2,
+    subImage_3: tour.subImage_3,
   });
 
   res.status(201).send();
@@ -134,7 +136,9 @@ export const updateTour = async (req: Request, res: Response, next: NextFunction
       !updatedTour.name ||
       !updatedTour.image ||
       !updatedTour.description ||
-      !updatedTour.carouselImages
+      !updatedTour.subImage_1 ||
+      !updatedTour.subImage_2 ||
+      !updatedTour.subImage_3
     ) {
       throw new ValidationError("Invalid tour data");
     }
