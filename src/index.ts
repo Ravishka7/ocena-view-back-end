@@ -32,8 +32,3 @@ app.use(globalErrorHandlingMiddleware);
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
-
-
-// DNC8GMaR6RSCCSnZ
-
-// mongodb+srv://ravishkaranasinghe:DNC8GMaR6RSCCSnZ@oceanview.kmht5ln.mongodb.net/?retryWrites=true&w=majority&appName=OceanView
