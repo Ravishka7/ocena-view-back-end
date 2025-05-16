@@ -66,7 +66,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export const getAllTours = async(req: Request, res: Response, next: NextFunction) => {
   try {
     const tours = await Tour.find();
-    await sleep(1000); // Simulate a delay of 1 second
+    await sleep(500); // Simulate a delay of 1 second
     res.status(200).json(tours);
     return;
   } catch (error) {

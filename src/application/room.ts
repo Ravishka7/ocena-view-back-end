@@ -9,7 +9,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export const getAllRooms = async(req: Request, res: Response, next: NextFunction) => {
   try {
     const rooms = await Room.find();
-    await sleep(1000); // Simulate a delay of 1 second
+    await sleep(500); // Simulate a delay of 1 second
     res.status(200).json(rooms);
     return;
   } catch (error) {
@@ -38,7 +38,7 @@ export const createRoom = async (req: Request, res: Response, next: NextFunction
   try {
     const room = req.body;
     //Validate request data
-    if (!room.name || !room.image || !room.description || !room.price || !room.subImage_1 || !room.subImage_2 || !room.subImage_3) {
+    if (!room.name || !room.image || !room.description || !room.price ) {
     throw new ValidationError("Invalid room data");
     }
   //Create new room
@@ -47,9 +47,6 @@ export const createRoom = async (req: Request, res: Response, next: NextFunction
     image: room.image,
     description: room.description,
     price: room.price,
-    subImage_1: room.subImage_1,
-    subImage_2: room.subImage_2,
-    subImage_3: room.subImage_3,
   });
 
   res.status(201).send();
@@ -83,10 +80,7 @@ export const updateRoom = async (req: Request, res: Response, next: NextFunction
       !updatedRoom.name ||
       !updatedRoom.image ||
       !updatedRoom.description ||
-      !updatedRoom.price ||
-      !updatedRoom.subImage_1 ||
-      !updatedRoom.subImage_2 ||
-      !updatedRoom.subImage_3
+      !updatedRoom.price 
     ) {
       throw new ValidationError("Invalid room data");
     }
