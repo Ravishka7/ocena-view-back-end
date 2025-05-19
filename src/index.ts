@@ -9,11 +9,13 @@ import usersRouter from "./api/user";
 import roomBookingsRouter from "./api/roomBooking";
 import tourBookingsRouter from "./api/tourBooking";
 import globalErrorHandlingMiddleware from "./api/middleware/global-error-handling-middleware";
-
+import { clerkMiddleware } from "@clerk/express";
 
 const app = express();
-const PORT = 8000;
+app.use(clerkMiddleware());
 
+const PORT = 8000;
+// Middleware to parse JSON requests
 app.use(express.json());
 app.use(cors());
 
