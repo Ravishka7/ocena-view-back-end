@@ -3,7 +3,7 @@ import UnauthorizedError from "../../domain/errors/unauthorized-error";
 
 
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
-    if (!req.auth?.userId) {
+    if (!req?.auth.userId) {
         throw new UnauthorizedError("User is Unautherized");
     }
     next();
