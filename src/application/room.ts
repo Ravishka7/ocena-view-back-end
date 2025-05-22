@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import Room from "../infrastructure/schemas/Room";
 import NotFoundError from "../domain/errors/not-found-error";
 import ValidationError from "../domain/errors/validation-error";
+import { CreateRoomDTO } from "../domain/dtos/room";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -36,17 +37,17 @@ export const getRoomByID = async (req: Request, res: Response, next: NextFunctio
 
 export const createRoom = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const room = req.body;
+    const room = CreateRoomDTO.safeParse(req.body);
     //Validate request data
-    if (!room.name || !room.image || !room.description || !room.price ) {
-    throw new ValidationError("Invalid room data");
+    if (!room.success) {
+      throw new ValidationError(room.error.message);
     }
   //Create new room
   await Room.create({
-    name: room.name,
-    image: room.image,
-    description: room.description,
-    price: room.price,
+    name: room.data.name,
+    image: room.data.image,
+    description: room.data.description,
+    price: room.data.price,
   });
 
   res.status(201).send();

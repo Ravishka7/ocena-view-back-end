@@ -1,14 +1,14 @@
-import mongoose from 'mongoose';
+// src/infrastructure/schemas/RoomBooking.ts
+import mongoose from "mongoose";
 
-const roomBookingsSchema = new mongoose.Schema({
+const roomBookingSchema = new mongoose.Schema({
   roomId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Room',
+    ref: "Room",
     required: true,
   },
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    type: String, // Assuming Clerk user ID is string
     required: true,
   },
   checkInDate: {
@@ -19,10 +19,27 @@ const roomBookingsSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  roomNumber: {
+  adults: {
     type: Number,
     required: true,
+    min: 1,
   },
-});
+  children: {
+    type: Number,
+    required: true,
+    min: 0,
+  },
+  mealPlan: {
+    type: String,
+    enum: ["Room Only", "Bed & Breakfast", "Half Board", "Full Board"],
+    default: "Room Only",
+  },
+  bookingNumber: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+}, { timestamps: true });
 
-export default mongoose.model('RoomBookings', roomBookingsSchema);
+const RoomBooking = mongoose.model("RoomBooking", roomBookingSchema);
+export default RoomBooking;

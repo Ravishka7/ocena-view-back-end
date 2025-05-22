@@ -22,6 +22,11 @@ const globalErrorHandlingMiddleware = (
             message: error.message,
         });
     }
+    if (error.name === 'ForbiddenError') {
+        return res.status(403).send({
+            message: error.message,
+        });
+    }
     res.status(500).send();
 };
 
